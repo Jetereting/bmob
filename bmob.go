@@ -14,7 +14,7 @@ func init() {
 
 func IsPay(projectName string) bool {
 
-	if isPay, has := cc.Get("IsPay"); has {
+	if isPay, has := cc.Get(projectName); has {
 		return isPay.(bool)
 	}
 
@@ -34,21 +34,21 @@ func IsPay(projectName string) bool {
 	req.Header("Content-Type", "application/json")
 	err := req.ToJSON(&r)
 	if err != nil {
-		cc.Set("IsPay", true, 20*time.Minute)
+		cc.Set(projectName, true, 20*time.Minute)
 		return true
 	}
 	if len(r.Results) == 0 {
-		cc.Set("IsPay", true, 20*time.Minute)
+		cc.Set(projectName, true, 20*time.Minute)
 		return true
 	}
 	if r.Results[0].IsPay {
-		cc.Set("IsPay", true, 2*time.Hour)
+		cc.Set(projectName, true, 2*time.Hour)
 		return true
 	}
 	if time.Now().Format("2006-01-02 15:04:05") > r.Results[0].ExpireDate.Iso {
-		cc.Set("IsPay", false, 20*time.Minute)
+		cc.Set(projectName, false, 20*time.Minute)
 		return false
 	}
-	cc.Set("IsPay", true, 20*time.Minute)
+	cc.Set(projectName, true, 20*time.Minute)
 	return true
 }
