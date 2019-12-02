@@ -28,9 +28,9 @@ func IsPay(projectName string) bool {
 	}
 	var r Result
 
-	req := httplib.Get(`https://api2.bmob.cn/1/classes/project?where={"name":"` + projectName + `"}`)
-	req.Header("X-Bmob-Application-Id", "9cc2fc47276419893dc4361352b3cef0")
-	req.Header("X-Bmob-REST-API-Key", "405c5d5f1296375287d908a964d1504c")
+	req := httplib.Get(`https://api2.bmob.cn/1/classes/App?where={"name":"` + projectName + `"}`)
+	req.Header("X-Bmob-Application-Id", "a7517b83302c544bac2b9cbd7a7d7fa1")
+	req.Header("X-Bmob-REST-API-Key", "43d6eb0aa1236955a1c9fa2a575e7ad6")
 	req.Header("Content-Type", "application/json")
 	err := req.ToJSON(&r)
 	if err != nil {
